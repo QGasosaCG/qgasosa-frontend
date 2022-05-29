@@ -1,1 +1,1 @@
-# qgasosa-frontend
+# QGasosa - Front-end
