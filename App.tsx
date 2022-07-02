@@ -1,20 +1,44 @@
+import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { loadAsync, useFonts } from 'expo-font'
+
+import { LocationProvider } from './src/contexts/LocationContext';
+import { GasStationProvider } from './src/contexts/GasStationContext';
+import Home from './src/pages/Home';
+import Map from './src/components/Map';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>QGasosa CG!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  useEffect(() => {
+    
+    let load = async () => {
+      await loadAsync({
+        'Kanit_Bold': require('./src/assets/fonts/Kanit-BoldItalic.ttf'),
+        'Kanit': require('./src/assets/fonts/Kanit-Italic.ttf'),
+        'Kanit_Light': require('./src/assets/fonts/Kanit-LightItalic.ttf')
+      });
+    }
+
+    load()
+
+  }, [])
+
+  useFonts({
+    Kanit: require('./src/assets/fonts/Kanit-Italic.ttf'),
+    Kanit_Bold: require('./src/assets/fonts/Kanit-BoldItalic.ttf'),
+    Kanit_Light: require('./src/assets/fonts/Kanit-LightItalic.ttf')
+  })
+
+  return (
+    <SafeAreaProvider>
+      <LocationProvider>
+        <GasStationProvider>
+          <Map />
+          <Home />
+          <StatusBar animated translucent/>
+        </GasStationProvider>
+      </LocationProvider>
+    </SafeAreaProvider>
+  )
+}
