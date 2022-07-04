@@ -7,12 +7,16 @@ import { COLORS } from "../../utils/theme";
 
 import styles from "./styles";
 
-export default function Search() {
+interface SearchProps {
+    style?: any
+}
+
+export default function Search(props: SearchProps) {
 
     const { search, setSearch } = useContext(GasStationContext);
 
     return (
-        <View style={styles.container}>
+        <View style={{...props.style, ...styles.container}}>
             <TextInput style={styles.input} onChangeText={setSearch} value={search} placeholder='Pesquise por um posto' placeholderTextColor={COLORS.gray} underlineColorAndroid='transparent' autoCorrect={false} selectionColor={COLORS.gray_transparent} />
             <SearchIcon color={COLORS.red} width={50} height={15} />
         </View>

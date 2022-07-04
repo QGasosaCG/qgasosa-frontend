@@ -6,12 +6,10 @@ import { loadAsync, useFonts } from 'expo-font'
 import { LocationProvider } from './src/contexts/LocationContext';
 import { GasStationProvider } from './src/contexts/GasStationContext';
 import Home from './src/pages/Home';
-import Map from './src/components/Map';
 
 export default function App() {
 
-  useEffect(() => {
-    
+  useEffect(() => {    
     let load = async () => {
       await loadAsync({
         'Kanit_Bold': require('./src/assets/fonts/Kanit-BoldItalic.ttf'),
@@ -21,7 +19,6 @@ export default function App() {
     }
 
     load()
-
   }, [])
 
   useFonts({
@@ -34,7 +31,6 @@ export default function App() {
     <SafeAreaProvider>
       <LocationProvider>
         <GasStationProvider>
-          <Map />
           <Home />
           <StatusBar animated translucent/>
         </GasStationProvider>
