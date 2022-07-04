@@ -4,7 +4,6 @@ import { COLORS, FONTS, SHADOW } from "../../utils/theme";
 const styles = StyleSheet.create({
 
     container: {
-        width: '100%',
         height: 50,
         
         borderRadius: 5,

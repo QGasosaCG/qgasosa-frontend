@@ -11,7 +11,7 @@ interface ButtonConsumptionProps {
 export default function ButtonConsumption(props: ButtonConsumptionProps) {
 
     return (
-        <TouchableHighlight onPress={props.onPress} style={styles.button} >
+        <TouchableHighlight onPress={props.onPress} style={styles.button} underlayColor={COLORS.white} >
             <GasolineIcon color={COLORS.red} />
         </TouchableHighlight>
     )

@@ -9,6 +9,7 @@ import styles from './styles';
 
 interface MapsProps {
     children?: any
+    style?: any
 }
 
 export default function Home(props: MapsProps) {
@@ -16,7 +17,7 @@ export default function Home(props: MapsProps) {
     const { userLocation, locationDelta } = useContext(LocationContext);
 
     return (
-        <View style={styles.container}>            
+        <View style={{...props.style, ...styles.container}}>            
             <MapView 
                 style={ styles.map }
                 region={{
@@ -31,6 +32,8 @@ export default function Home(props: MapsProps) {
                 loadingBackgroundColor={COLORS.white}
                 minZoomLevel={12}
                 customMapStyle={mapStyle}
+                userLocationFastestInterval={0}
+                userLocationUpdateInterval={0}
             />        
         </View>
     )
