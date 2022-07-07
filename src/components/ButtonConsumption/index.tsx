@@ -1,5 +1,5 @@
 import { TouchableHighlight } from "react-native";
-import { GasolineIcon } from "../../assets/icons/icons";
+import { GasolineIcon } from "../../assets/icons";
 
 import { COLORS } from "../../utils/theme";
 import styles from "./styles";

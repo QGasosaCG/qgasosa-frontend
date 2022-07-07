@@ -1,7 +1,7 @@
 import {Text, TouchableHighlight, View } from "react-native";
 
 import styles from "./styles";
-import { FireIcon } from "../../assets/icons/icons";
+import { FireIcon } from "../../assets/icons";
 import { COLORS } from "../../utils/theme";
 
 interface RefuelProps {
