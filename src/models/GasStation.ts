@@ -15,14 +15,12 @@ export default class GasStation {
     #name: string
     #address: Address
     #fuels: Fuel[]
-    #isFavorite: boolean
 
-    constructor(id: string, name: string, address: Address, fuels: Fuel[], isFavorite = false) {
+    constructor(id: string, name: string, address: Address, fuels: Fuel[]) {
         this.#id = id;
         this.#name = name;
         this.#address = address;
         this.#fuels = fuels;
-        this.#isFavorite = isFavorite;
     }
     
 
@@ -42,12 +40,8 @@ export default class GasStation {
         return this.#fuels
     }
 
-    get isFavorite() : boolean {
-        return this.#isFavorite
-    }
-
     static toGasStation(object: any) : GasStation {
-        return new GasStation(object.id, object.name, object.address, object.fuels, object.isFavorite);
+        return new GasStation(object.id, object.name, object.address, object.fuels);
     }
 
 }

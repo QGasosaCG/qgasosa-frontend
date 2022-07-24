@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { COLORS, FONTS, SHADOW } from "../../utils/theme";
+import { COLORS, SHADOW } from "../../utils/theme";
 
 const styles = StyleSheet.create({
 
@@ -14,7 +14,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
 
-        
+        svg: {
+            fontSize: 18,
+            color: COLORS.red
+        },  
+
         ...SHADOW
     }
 })

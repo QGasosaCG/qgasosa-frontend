@@ -1,26 +1,29 @@
-import { TouchableHighlight, View, Text } from "react-native"
+import { View, Text, TouchableOpacity, TouchableWithoutFeedback } from "react-native"
 
 import GasStation from "../../../models/GasStation"
-import { LocationIcon, StarFillIcon } from '../../../assets/icons';
+import Icons from '../../../assets/icons';
 
 import styles from "./styles";
+import { priceView } from "../../../utils/functions";
+import { useContext } from "react";
+import GasStationContext from "../../../contexts/GasStationContext";
 
 interface GasStationSearchProps {
     gasStation: GasStation,
-    onClick: () => void
+    onPress: () => void
 }
 
 export default function GasStationSearch(props: GasStationSearchProps) {
 
-    
+    const { isFavorite } = useContext(GasStationContext)
 
     return (
-        <TouchableHighlight>
+        <TouchableWithoutFeedback onPress={props.onPress}>
             <View style={styles.container}>
                 <View style={styles.content}>
 
-                    { props.gasStation.isFavorite ? 
-                        <StarFillIcon style={styles.favoriteIcon} />
+                    { isFavorite(props.gasStation) ? 
+                        <Icons name='star' style={styles.favoriteIcon}/>
                     : null}
 
                     <Text style={styles.title} numberOfLines={1} ellipsizeMode='tail' >{props.gasStation.name}</Text>
@@ -33,7 +36,7 @@ export default function GasStationSearch(props: GasStationSearchProps) {
                     {
                         props.gasStation.fuels.map((fuel, index) => {
                             return(
-                                <Text style={styles.fuel} key={'fuel-' + index}>{fuel.name} - <Text style={styles.money}>R$ {fuel.price.toFixed(2).replace('.', ',')}</Text></Text>
+                                <Text style={styles.fuel} key={'fuel-' + index}>{fuel.name} - <Text style={styles.money}>R$ {priceView(fuel.price)}</Text></Text>
                             )
                         })
                     }
@@ -41,13 +44,11 @@ export default function GasStationSearch(props: GasStationSearchProps) {
                 </View>
 
                 <View style={styles.content}>
-                    
-                    <LocationIcon style={styles.locationIcon}/>
+                    <Icons name='location' style={styles.locationIcon}/>
                     <Text style={styles.address} numberOfLines={1} ellipsizeMode='tail' >{props.gasStation.address.name}</Text>
-
                 </View>
 
             </View>
-        </TouchableHighlight>
+        </TouchableWithoutFeedback>
     )
 }

@@ -36,11 +36,16 @@ const styles = StyleSheet.create({
     },
 
     icon: {
-        width: 20,
-        height: 20,
-        backgroundColor: 'blue',
+        width: 50,
+        height: 50,
+        display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+
+        svg: {
+            fontSize: 14,
+            color: COLORS.red
+        }
     },
 
     filters: {

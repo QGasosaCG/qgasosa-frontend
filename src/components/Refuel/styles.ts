@@ -21,7 +21,12 @@ const styles = StyleSheet.create({
 
     content: {
         flexDirection: 'row',
-        alignItems: "center"
+        alignItems: "center",
+
+        svg: {
+            color: COLORS.white,
+            fontSize: 15
+        },
     },
 
     text: {

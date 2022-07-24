@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
 
     content: {
         flexDirection: 'row',
-        alignItems: 'flex-end',
+        alignItems: 'center',
         marginVertical: 3
     },
 
@@ -25,11 +25,12 @@ const styles = StyleSheet.create({
         color: COLORS.red,
         fontFamily: FONTS.bold,
         fontSize: 18,
-        width: 180
+        width: 200
     },
 
     favoriteIcon: {
-        minHeight: 20,
+        fontSize: 12,
+        color: COLORS.red,
         marginRight: 5
     },
 
@@ -49,10 +50,12 @@ const styles = StyleSheet.create({
         fontFamily: FONTS.regular,
         fontSize: 11,
         width: 130,
+        marginLeft: 5
     },
 
     locationIcon: {
-        maxHeight: 13,
+        fontSize: 10,
+        color: COLORS.blue
     }
 
 })

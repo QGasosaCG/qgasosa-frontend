@@ -1,7 +1,6 @@
-import { TouchableHighlight } from "react-native";
-import { GasolineIcon } from "../../assets/icons";
+import { TouchableOpacity } from "react-native";
+import Icons from "../../assets/icons";
 
-import { COLORS } from "../../utils/theme";
 import styles from "./styles";
 
 interface ButtonConsumptionProps {
@@ -11,8 +10,8 @@ interface ButtonConsumptionProps {
 export default function ButtonConsumption(props: ButtonConsumptionProps) {
 
     return (
-        <TouchableHighlight onPress={props.onPress} style={styles.button} underlayColor={COLORS.white} >
-            <GasolineIcon color={COLORS.red} />
-        </TouchableHighlight>
+        <TouchableOpacity onPress={props.onPress} style={styles.button} activeOpacity={0.8} >
+            <Icons name="gas" style={styles.button.svg}/>
+        </TouchableOpacity>
     )
 }
