@@ -9,7 +9,7 @@ export const COLORS = {
 export const FONTS = {
     bold: 'Kanit_Bold',
     regular: 'Kanit',
-    light: 'Kanit-Light'
+    light: 'Kanit_Light'
 }
 
 export const SHADOW = {

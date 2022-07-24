@@ -7,12 +7,18 @@ import Search from '../../components/Search';
 import Map from '../../components/Map';
 
 import styles from './styles';
+import { useContext } from 'react';
+import AppContext from '../../contexts/AppContext';
 
 export default function Home() {
+
+    const { alert } = useContext(AppContext);
 
     return (
         <SafeAreaView style={styles.container}>
             
+            {alert}
+
             <Map style={styles.map}/>
 
             <Search style={styles.search} />
