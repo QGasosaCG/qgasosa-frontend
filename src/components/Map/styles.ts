@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 import { COLORS, FONTS, SHADOW } from "../../utils/theme";
 
 const styles = StyleSheet.create({
@@ -12,25 +13,31 @@ const styles = StyleSheet.create({
         flex: 1,
         marginBottom: -60,
     },
-    
-    callout: {
 
-        width: 150,
-        height: "100%",
+    marker: {
+      backgroundColor: COLORS.red,
+      
+      height: 20,
+      paddingHorizontal: 5,
 
-        backgroundColor: COLORS.white,
-        
-        borderRadius: 10,
-        padding: 10,
+      borderRadius: 3,
 
-        ...SHADOW
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+
+      svg: {
+        color: COLORS.white,
+        fontSize: 10,
       },
 
-      calloutText: {
-        color: COLORS.blue,
-        fontFamily: FONTS.regular,
-        fontSize: 10
+      star: {
+        color: COLORS.white,
+        fontSize: 7,
+
+        marginLeft: 5,
       }
+    }
 
 });
 

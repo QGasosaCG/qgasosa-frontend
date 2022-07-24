@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Text, TouchableHighlight } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 
 import GasStationContext from "../../../contexts/GasStationContext";
 import styles from "./styles";
@@ -28,8 +28,8 @@ export default function Filter(props: FilterProps) {
     }
 
     return (
-        <TouchableHighlight onPress={handlePress} style={styles.container} underlayColor='#00000000' >
+        <TouchableOpacity onPress={handlePress} style={styles.container} activeOpacity={0.8} >
             <Text style={{...styles.text, ...colors}}>{props.content}</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
     )
 }

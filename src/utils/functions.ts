@@ -10,3 +10,7 @@ export function calculateGap(gap: number | undefined, position: 'left' | 'right'
         return { marginRight: (gap/2)}
     }
 }
+
+export function priceView(price: number) {
+    return price.toFixed(2).replace('.', ',');
+}

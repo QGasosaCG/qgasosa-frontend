@@ -3,7 +3,8 @@ export const COLORS = {
     white: '#FEFEFE',
     blue: '#023059',
     gray: '#AFAFAF',
-    gray_transparent: '#AFAFAF55'
+    gray_transparent: '#AFAFAF55',
+    blue_transparent: 'rgba(2, 48, 89, 0.3)'
 }
 
 export const FONTS = {

@@ -1,15 +1,21 @@
-import { createContext, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createContext, useEffect, useState } from "react";
 import Alert from "../components/Alert";
 
 interface AppContextProps {
     alert: any
     alertError: (text: string) => void
     alertSucess: (text: string) => void
+
+    storage: any,
+    updateStorage: (updatedStorage: any) => void
 }
 
 const AppContext = createContext<AppContextProps>({} as AppContextProps);
 
 export function AppProvider(props: any) {
+
+    const [ storage, setStorage ] = useState({});
 
     const [alert, setAlert] = useState(<Alert text='' />);
 
@@ -23,11 +29,56 @@ export function AppProvider(props: any) {
         setTimeout(() => setAlert(<Alert text={text} sucess/>), 3000);
     }
 
+    async function updateStorage(updatedStorage: any) {
+
+        try {
+            
+            await AsyncStorage.setItem('qgasosa@storage', JSON.stringify(updatedStorage));
+            getStorage();
+
+        } catch(e) {
+            console.log(e)
+        }
+    }
+
+    async function getStorage() {
+
+        try {
+        
+            // await AsyncStorage.removeItem('qgasosa@storage')
+
+            let storage = await AsyncStorage.getItem('qgasosa@storage');
+        
+            if( !storage ) { 
+
+                await AsyncStorage.setItem('qgasosa@storage', JSON.stringify({
+                    favoritesGasStations: []
+                }));
+                storage = await AsyncStorage.getItem('qgasosa@storage');
+            }
+
+            // console.log(storage);
+
+            setStorage(JSON.parse(storage || ''));
+
+        } catch(e) {
+            console.log(e)
+        }
+
+    }
+
+    useEffect(() => {
+        getStorage()
+    }, [])
+
     return (
         <AppContext.Provider value={{
             alert,
             alertError,
-            alertSucess
+            alertSucess,
+
+            storage,
+            updateStorage
         }}>
             {props.children}
         </AppContext.Provider>

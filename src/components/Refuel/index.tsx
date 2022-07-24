@@ -1,7 +1,7 @@
-import {Text, TouchableHighlight, View } from "react-native";
+import {Text, TouchableOpacity, View } from "react-native";
 
 import styles from "./styles";
-import { FireIcon } from "../../assets/icons";
+import Icons from "../../assets/icons";
 import { COLORS } from "../../utils/theme";
 
 interface RefuelProps {
@@ -11,11 +11,11 @@ interface RefuelProps {
 export default function Refuel(props: RefuelProps) {
 
     return (
-        <TouchableHighlight onPress={props.onPress} style={styles.button} underlayColor={COLORS.red} >
+        <TouchableOpacity onPress={props.onPress} style={styles.button} activeOpacity={0.8} >
             <View style={styles.content}>
-                <FireIcon color={COLORS.white} />
+                <Icons name="fire" style={styles.content.svg} />
                 <Text style={styles.text}>Abastecer</Text>
             </View>
-        </TouchableHighlight>
+        </TouchableOpacity>
     )
 }
