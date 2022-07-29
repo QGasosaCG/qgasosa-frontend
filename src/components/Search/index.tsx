@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Text, TextInput, View } from "react-native";
 
 import GasStationContext from "../../contexts/GasStationContext";
@@ -42,12 +42,11 @@ export default function Search(props: SearchProps) {
 
                             <Filters />
 
-                            
-                                <FlatList 
-                                    data={gasStationsToShow} 
-                                    renderItem={(object) => <GasStationSearch gasStation={object.item} onPress={() => setOpenGasStation(object.item)} key={'search-' + object.index} />}
-                                    ListEmptyComponent={<Text style={styles.empty}>Nenhum posto encontrado...</Text>}
-                                />
+                            <FlatList 
+                                data={gasStationsToShow} 
+                                renderItem={(object) => <GasStationSearch gasStation={object.item} onPress={() => setOpenGasStation(object.item)} key={'search-' + object.index} />}
+                                ListEmptyComponent={<Text style={styles.empty}>Nenhum posto encontrado...</Text>}
+                            />
 
                         </>
                 : null

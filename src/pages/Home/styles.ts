@@ -10,6 +10,12 @@ const styles = StyleSheet.create({
       position: 'relative'
     },
 
+    content: {
+      flex: 1,
+      alignItems: 'flex-start',
+      justifyContent: 'flex-end',
+    },
+
     search: {
       
       marginHorizontal: 30,
@@ -19,11 +25,6 @@ const styles = StyleSheet.create({
 
     flexRow: {
       flexDirection: 'row',
-      flexWrap: 'wrap',
-
-      position: 'absolute',
-      
-      bottom: 0,
 
       marginHorizontal: 30,
       marginBottom: 30,

@@ -36,7 +36,7 @@ export default function Home(props: MapsProps) {
                 minZoomLevel={12}
                 customMapStyle={mapStyle}
                 userLocationFastestInterval={0}
-                userLocationUpdateInterval={0}
+                userLocationUpdateInterval={110}
             >
                 
                 {

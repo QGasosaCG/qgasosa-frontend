@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import Icons from "../../assets/icons";
 
 import GasStationContext from "../../contexts/GasStationContext"
@@ -13,19 +13,19 @@ export default function ModalGasStation() {
 
     const { openGasStation, setOpenGasStation, isFavorite, favorite, unfavorite } = useContext(GasStationContext);
 
-    if(!openGasStation) return <></>
+    if(!openGasStation) return null
 
     return (
         <View style={styles.background} >
                         
             <Modal close={() => setOpenGasStation(null)} visible={!!openGasStation}>
 
-                <View>
+                <ScrollView style={styles.content}>
                         
                     { isFavorite(openGasStation) ?
-                        <TouchableOpacity activeOpacity={0.8} onPress={() => unfavorite(openGasStation)}><Icons name='star' style={{...styles.favoriteIcon, color: COLORS.red}} /></TouchableOpacity>
+                        <TouchableOpacity style={styles.touchable} activeOpacity={0.8} onPress={() => unfavorite(openGasStation)}><Icons name='star' style={{...styles.favoriteIcon, color: COLORS.red}} /></TouchableOpacity>
                     :
-                        <TouchableOpacity activeOpacity={0.8} onPress={() => favorite(openGasStation)}><Icons name='star' style={{...styles.favoriteIcon, color: COLORS.gray_transparent}} /></TouchableOpacity>
+                        <TouchableOpacity style={styles.touchable} activeOpacity={0.8} onPress={() => favorite(openGasStation)}><Icons name='star' style={{...styles.favoriteIcon, color: COLORS.gray_transparent}} /></TouchableOpacity>
                     }
 
                     <Text style={styles.name}>{openGasStation.name}</Text>
@@ -65,7 +65,7 @@ export default function ModalGasStation() {
                         </View>
                     </TouchableOpacity>
 
-                </View>
+                </ScrollView>
 
             </Modal>
 

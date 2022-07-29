@@ -9,6 +9,9 @@ interface AppContextProps {
 
     storage: any,
     updateStorage: (updatedStorage: any) => void
+
+    success: boolean
+    showSuccess: () => void
 }
 
 const AppContext = createContext<AppContextProps>({} as AppContextProps);
@@ -17,7 +20,14 @@ export function AppProvider(props: any) {
 
     const [ storage, setStorage ] = useState({});
 
-    const [alert, setAlert] = useState(<Alert text='' />);
+    const [ alert, setAlert ] = useState(<Alert text='' />);
+
+    const [ success, setSuccess ] = useState(false);
+
+    function showSuccess() {
+        setSuccess(true);
+        setTimeout(() => setSuccess(false), 3000);
+    }
 
     function alertError(text: string) {
         setAlert(<Alert text={text} show />);
@@ -52,7 +62,8 @@ export function AppProvider(props: any) {
             if( !storage ) { 
 
                 await AsyncStorage.setItem('qgasosa@storage', JSON.stringify({
-                    favoritesGasStations: []
+                    favoritesGasStations: [],
+                    consumption: 0
                 }));
                 storage = await AsyncStorage.getItem('qgasosa@storage');
             }
@@ -78,7 +89,10 @@ export function AppProvider(props: any) {
             alertSucess,
 
             storage,
-            updateStorage
+            updateStorage,
+
+            success,
+            showSuccess
         }}>
             {props.children}
         </AppContext.Provider>

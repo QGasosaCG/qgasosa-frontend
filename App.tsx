@@ -6,9 +6,14 @@ import { loadAsync } from 'expo-font'
 import { LocationProvider } from './src/contexts/LocationContext';
 import { GasStationProvider } from './src/contexts/GasStationContext';
 import { AppProvider } from './src/contexts/AppContext';
+import { ConsumptionProvider } from './src/contexts/ConsumptionContext';
+import { RefuelProvider } from './src/contexts/RefuelContext';
 
 import Home from './src/pages/Home';
 import ModalGasStation from './src/components/ModalGasStation';
+import ModalConsumption from './src/components/ModalConsumption';
+import Success from './src/components/Success';
+import ModalRefuel from './src/components/ModalRefuel';
 
 export default function App() {
 
@@ -37,16 +42,23 @@ export default function App() {
       <AppProvider>
         <LocationProvider>
           <GasStationProvider>
+            <ConsumptionProvider>
+              <RefuelProvider>
 
-            { fontsLoaded ? <>
-              
-              <Home />
-              <ModalGasStation />
-               
-            </> : null }
+              { fontsLoaded ? <>
+                
+                <Home />
+                <ModalConsumption />
+                <ModalRefuel />
+                <ModalGasStation />
+                <Success />
+                
+              </> : null }
 
-            <StatusBar animated translucent/>
+              <StatusBar animated translucent/>
 
+              </RefuelProvider>
+            </ConsumptionProvider>
           </GasStationProvider>
         </LocationProvider>
       </AppProvider>

@@ -4,11 +4,13 @@ import { COLORS } from "../../utils/theme";
 const styles = StyleSheet.create({
 
     background: {
+        
         flexdirection: 'column',
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
         height: '100%',
-        width: '100%'
+        width: '100%',
+
     },
 
     close: {
@@ -28,7 +30,8 @@ const styles = StyleSheet.create({
     },
 
     content: {
-        padding: 30,
+        paddingVertical: 35,
+        paddingHorizontal: 30,
         width: '100%',
         backgroundColor: COLORS.white
     }

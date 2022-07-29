@@ -138,30 +138,31 @@ export function GasStationProvider(props: { children: any}) {
     }
 
     function isFavorite(gasStation: GasStation) {
-        return favoritesGasStations.includes(gasStation.id);
+        return favoritesGasStations?.includes(gasStation.id);
     }
 
     useEffect( () => {
         
-        setIsSearching(true);
+        const execute = () => {
+            setIsSearching(true);
         
-        if(filter == 'distance') getByDistance()
-        else if (filter == 'price') getByPrice();
-        else if (filter == 'favorite') {
-            getGasStations();
+            if(filter == 'distance') getByDistance();
+            else if (filter == 'price') getByPrice();
+            else if (filter == 'favorite') getGasStations();
+
+            let temp = gasStations.filter((gasStation) => {
+                
+                let okInSearch = gasStation.name.toLowerCase().includes(search.toLowerCase()) || gasStation.address.name.toLowerCase().includes(search.toLowerCase());
+                
+                if(filter == 'favorite') return okInSearch && isFavorite(gasStation);
+                else return okInSearch;
+            })
+
+            setGasStationsToShow(temp);
+            setIsSearching(false);
         }
 
-        let temp = gasStations.filter((gasStation) => {
-            
-            let okInSearch = gasStation.name.toLowerCase().includes(search.toLowerCase()) || gasStation.address.name.toLowerCase().includes(search.toLowerCase());
-            
-            if(filter == 'favorite') return okInSearch && isFavorite(gasStation);
-            else return okInSearch;
-        })
-
-
-        setGasStationsToShow(temp);
-        setIsSearching(false);
+        execute();
 
     }, [ search, filter ])
 
