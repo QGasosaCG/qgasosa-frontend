@@ -1,12 +1,17 @@
-interface Address {
-    name: string,
+export interface Address {
+    street: string,
     longitude: number,
     latitude: number
 }
 
-interface Fuel {
+export interface Fuel {
     name: string,
     price: number
+}
+
+export interface Distance {
+    text: string,
+    value: number
 }
 
 export default class GasStation {
@@ -15,12 +20,14 @@ export default class GasStation {
     #name: string
     #address: Address
     #fuels: Fuel[]
+    #distance: Distance
 
-    constructor(id: string, name: string, address: Address, fuels: Fuel[]) {
+    constructor(id: string, name: string, address: Address, fuels: Fuel[], distance = { text: '', value: -1}) {
         this.#id = id;
         this.#name = name;
         this.#address = address;
         this.#fuels = fuels;
+        this.#distance = distance;
     }
     
 
@@ -40,8 +47,16 @@ export default class GasStation {
         return this.#fuels
     }
 
+    get distance() {
+        return this.#distance
+    }
+
+    set distance(new_value: Distance) {
+        this.#distance = new_value
+    }
+
     static toGasStation(object: any) : GasStation {
-        return new GasStation(object.id, object.name, object.address, object.fuels);
+        return new GasStation(object.id, object.name, object.address, object.fuels, object.distance);
     }
 
 }

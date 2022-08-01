@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, TouchableWithoutFeedback } from "react-native"
+import { View, Text, TouchableWithoutFeedback } from "react-native"
 
 import GasStation from "../../../models/GasStation"
 import Icons from '../../../assets/icons';
@@ -27,7 +27,7 @@ export default function GasStationSearch(props: GasStationSearchProps) {
                     : null}
 
                     <Text style={styles.title} numberOfLines={1} ellipsizeMode='tail' >{props.gasStation.name}</Text>
-                    <Text style={styles.distance}>100m</Text>
+                    <Text style={styles.distance}>{props.gasStation.distance?.text}</Text>
 
                 </View>
 
@@ -45,7 +45,7 @@ export default function GasStationSearch(props: GasStationSearchProps) {
 
                 <View style={styles.content}>
                     <Icons name='location' style={styles.locationIcon}/>
-                    <Text style={styles.address} numberOfLines={1} ellipsizeMode='tail' >{props.gasStation.address.name}</Text>
+                    <Text style={styles.address} numberOfLines={1} ellipsizeMode='tail' >{props.gasStation.address.street}</Text>
                 </View>
 
             </View>

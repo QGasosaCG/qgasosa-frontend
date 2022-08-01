@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     },
 
     content: {
-        height: 400
+        
     },
 
     title: {

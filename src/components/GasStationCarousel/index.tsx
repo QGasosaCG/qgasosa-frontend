@@ -83,7 +83,7 @@ export default function Carousel(props: CarouselProps) {
 
                                     <View style={styles.gasStation_address} >
                                         <Icons name='location' style={styles.locationIcon}/>
-                                        <Text style={styles.gasStation_address_text} ellipsizeMode='tail' numberOfLines={1}>{gasStation.address.name}</Text>
+                                        <Text style={styles.gasStation_address_text} ellipsizeMode='tail' numberOfLines={1}>{gasStation.address.street}</Text>
                                     </View>
 
                                     <TouchableOpacity activeOpacity={0.8}>

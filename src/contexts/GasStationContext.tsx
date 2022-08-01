@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import GasStation from "../models/GasStation";
 import { listGasStations, listGasStationsByDistance, listGasStationsByPrice } from "../services/gasStation";
@@ -10,6 +9,8 @@ interface GasStationContextProps {
     
     gasStations: GasStation[]
     gasStationsToShow: GasStation[]
+
+    cleanGasStationsToShow: () => void
     
     search: string
     setSearch: (value: string) => void
@@ -25,6 +26,7 @@ interface GasStationContextProps {
     favorite: (gasStation: GasStation) => void
     unfavorite: (gasStation: GasStation) => void
     isFavorite: (gasStation: GasStation) => boolean
+
 }
 
 const GasStationContext = createContext<GasStationContextProps>({} as GasStationContextProps);
@@ -49,9 +51,9 @@ export function GasStationProvider(props: { children: any}) {
 
         try {
             let all = await listGasStations();
-            
+
             let converted = all.map((gasStation: any) => { 
-                return GasStation.toGasStation(gasStation)
+                return GasStation.toGasStation(gasStation);
             });
 
             setGasStations(converted);
@@ -66,14 +68,22 @@ export function GasStationProvider(props: { children: any}) {
     async function getByDistance() {
 
         try {
-            let all = await listGasStationsByDistance(gasStations.length, userLocation.longitude, userLocation.latitude );
-            
-            let converted = all.map((gasStation: any) => { 
-                return GasStation.toGasStation(gasStation)
-            });
 
-            setGasStations(converted);
-            setGasStationsToShow([]);
+            let temp = [...gasStations];
+            let distances = await listGasStationsByDistance( userLocation.longitude, userLocation.latitude );            
+
+            distances.forEach(object => {
+                temp.forEach( gasStation => {
+                    if(object.name == gasStation.name) gasStation.distance = object.distance
+                })
+            });
+            
+            temp.sort((a, b) => {
+                if(a.distance.value > b.distance.value) return 1
+                return -1;
+            })
+
+            setGasStations(temp);
 
         } catch(e) {
             // alertError('Ocorreu um erro');
@@ -84,14 +94,35 @@ export function GasStationProvider(props: { children: any}) {
     async function getByPrice() {
 
         try {
-            let all = await listGasStationsByPrice(gasStations.length);
             
-            let converted = all.map((gasStation: any) => { 
-                return GasStation.toGasStation(gasStation)
-            });
+            let temp = [...gasStations];
+            
+            temp.sort((a, b) => {
 
-            setGasStations(converted);
-            setGasStationsToShow([]);
+                let A_priceGasoline = 0;
+                let B_priceGasoline = 0;
+                
+                for (let fuel of a.fuels) {
+                    if(fuel.name == 'GASOLINA COMUM') {
+                        A_priceGasoline = fuel.price;
+                        break;    
+                    }
+                }
+
+                for (let fuel of b.fuels) {
+                    if(fuel.name == 'GASOLINA COMUM') {
+                        B_priceGasoline = fuel.price;
+                        break;    
+                    }
+                }
+
+                if(A_priceGasoline == 0 || B_priceGasoline == 0) return -5;
+
+                if(A_priceGasoline > B_priceGasoline) return 1
+                return -1;
+            })
+
+            setGasStations(temp);
 
         } catch(e) {
             // alertError('Ocorreu um erro');
@@ -99,10 +130,14 @@ export function GasStationProvider(props: { children: any}) {
 
     }
 
+    function cleanGasStationsToShow() {
+        setGasStationsToShow([]);
+    }
+
     async function favorite(gasStation: GasStation) {
         try {
         
-            let temp = [...favoritesGasStations, gasStation.id]
+            let temp = [...favoritesGasStations, gasStation.name]
 
             updateStorage({
                 ...storage,
@@ -121,8 +156,8 @@ export function GasStationProvider(props: { children: any}) {
 
             let temp = favoritesGasStations;
 
-            temp.forEach((id, index) => {
-                if(id === gasStation.id) temp.splice(index, 1)
+            temp.forEach((name, index) => {
+                if(name === gasStation.name) temp.splice(index, 1)
             }) 
 
             updateStorage({
@@ -138,34 +173,33 @@ export function GasStationProvider(props: { children: any}) {
     }
 
     function isFavorite(gasStation: GasStation) {
-        return favoritesGasStations?.includes(gasStation.id);
+        return favoritesGasStations?.includes(gasStation.name);
     }
 
-    useEffect( () => {
-        
-        const execute = () => {
-            setIsSearching(true);
-        
-            if(filter == 'distance') getByDistance();
-            else if (filter == 'price') getByPrice();
-            else if (filter == 'favorite') getGasStations();
+    useEffect(() => {
 
-            let temp = gasStations.filter((gasStation) => {
-                
-                let okInSearch = gasStation.name.toLowerCase().includes(search.toLowerCase()) || gasStation.address.name.toLowerCase().includes(search.toLowerCase());
+        async function execute() {
+
+            setIsSearching(true);
+
+            await getGasStations();
+
+            if(filter == 'distance') await getByDistance();
+            else if (filter == 'price') await getByPrice();
+    
+            let temp = gasStations.filter((gasStation) => { 
+                let okInSearch = gasStation.name.toLowerCase().includes(search.toLowerCase()) || gasStation.address.street.toLowerCase().includes(search.toLowerCase());
                 
                 if(filter == 'favorite') return okInSearch && isFavorite(gasStation);
                 else return okInSearch;
             })
-
+    
             setGasStationsToShow(temp);
             setIsSearching(false);
         }
 
         execute();
-
     }, [ search, filter ])
-
 
     useEffect(() => {
         setFavoritesGasStations(storage.favoritesGasStations)
@@ -173,12 +207,16 @@ export function GasStationProvider(props: { children: any}) {
 
     useEffect(() => {
         getGasStations();
+        setSearch('');
+        setFilter('');
     }, [])
 
     return (
         <GasStationContext.Provider value={{
             gasStations,
             gasStationsToShow,
+
+            cleanGasStationsToShow,
 
             search,
             setSearch,

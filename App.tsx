@@ -14,6 +14,8 @@ import ModalGasStation from './src/components/ModalGasStation';
 import ModalConsumption from './src/components/ModalConsumption';
 import Success from './src/components/Success';
 import ModalRefuel from './src/components/ModalRefuel';
+import { InvoiceProvider } from './src/contexts/InvoiceContext';
+import Camera from './src/components/Camera';
 
 export default function App() {
 
@@ -44,19 +46,22 @@ export default function App() {
           <GasStationProvider>
             <ConsumptionProvider>
               <RefuelProvider>
+                <InvoiceProvider>
 
-              { fontsLoaded ? <>
-                
-                <Home />
-                <ModalConsumption />
-                <ModalRefuel />
-                <ModalGasStation />
-                <Success />
-                
-              </> : null }
+    { fontsLoaded ? <>
+      
+      <Home />
+      <ModalConsumption />
+      <ModalRefuel />
+      <ModalGasStation />
+      <Success />
+      <Camera />
+      
+    </> : null }
 
-              <StatusBar animated translucent/>
+    <StatusBar animated translucent/>
 
+                </InvoiceProvider>
               </RefuelProvider>
             </ConsumptionProvider>
           </GasStationProvider>
