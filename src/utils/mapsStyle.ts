@@ -120,7 +120,15 @@ const mapStyle = [
           "visibility": "on"
         }
       ]
-    }
+    },
+    {
+      "featureType": "landscape.man_made",
+      "stylers": [
+        {
+          "visibility": "off"
+        }
+      ]
+    },
   ]
 
 export default mapStyle;

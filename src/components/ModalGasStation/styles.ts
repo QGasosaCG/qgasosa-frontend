@@ -12,6 +12,14 @@ const styles = StyleSheet.create({
         position: 'absolute'
     },
 
+    content: {
+        height: 400
+    },
+
+    touchable: {
+        alignSelf: 'flex-start'
+    },
+
     favoriteIcon: {
         fontSize: 18,
     },
@@ -22,7 +30,7 @@ const styles = StyleSheet.create({
         lineHeight: 34,
         color: COLORS.red,
         
-        marginTop: 20,
+        marginTop: 30,
     },
 
     address: {

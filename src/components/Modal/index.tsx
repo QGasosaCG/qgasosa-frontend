@@ -1,4 +1,4 @@
-import { Modal as PopUp, TouchableOpacity, View } from 'react-native'
+import { KeyboardAvoidingView, Modal as PopUp, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import Icons from '../../assets/icons'
@@ -14,7 +14,7 @@ interface ModalProps {
 export default function Modal(props: ModalProps) {
     return (
         <PopUp animationType='slide' visible={props.visible} statusBarTranslucent transparent>
-            <SafeAreaView style={styles.background}>
+            <KeyboardAvoidingView behavior='padding' style={styles.background}>
 
                 <TouchableOpacity onPress={props.close} activeOpacity={0.8} style={styles.close}>
                     <Icons name="close" style={styles.close.svg} />
@@ -24,7 +24,7 @@ export default function Modal(props: ModalProps) {
                     {props.children}
                 </View>
 
-            </SafeAreaView>
+            </KeyboardAvoidingView>
         </PopUp>
     )
 }

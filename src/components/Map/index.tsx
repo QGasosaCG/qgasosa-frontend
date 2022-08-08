@@ -17,26 +17,32 @@ interface MapsProps {
 export default function Home(props: MapsProps) {
 
     const { userLocation, locationDelta } = useContext(LocationContext);
-    const { gasStations, setOpenGasStation, isFavorite } = useContext(GasStationContext);
+    const { gasStations, setOpenGasStation, isFavorite, openGasStation } = useContext(GasStationContext);
 
     return (
         <View style={{...props.style, ...styles.container}}>            
             <MapView 
                 style={ styles.map }
-                region={{
-                    ...userLocation,
-                    ...locationDelta
-                }}
+                region={
+                    openGasStation ? {
+                        longitude: openGasStation.address.longitude,
+                        latitude: openGasStation.address.latitude,
+                        ...locationDelta }
+                    : {
+                        ...userLocation,
+                        ...locationDelta
+                    }
+                }
                 showsUserLocation
                 followsUserLocation
                 showsBuildings={false}
                 showsIndoors={false}
                 showsMyLocationButton={false}
                 loadingBackgroundColor={COLORS.white}
-                minZoomLevel={12}
+                minZoomLevel={13}
                 customMapStyle={mapStyle}
                 userLocationFastestInterval={0}
-                userLocationUpdateInterval={0}
+                userLocationUpdateInterval={110}
             >
                 
                 {

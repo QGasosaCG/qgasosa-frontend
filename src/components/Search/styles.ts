@@ -69,8 +69,11 @@ const styles = StyleSheet.create({
         
         color: COLORS.gray,
         fontFamily: FONTS.light
-    }
+    },
 
+    loading: {
+        paddingVertical: 15
+    }
 })
 
 export default styles;

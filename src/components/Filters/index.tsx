@@ -6,7 +6,6 @@ import Filter from "../Filters/Filter";
 export default function Filters() {
 
     return (
-
         <View style={styles.filters}>
 
             <Text style={styles.filtersTitle}>Filtrar por:</Text>
@@ -17,6 +16,5 @@ export default function Filters() {
             </View>
 
         </View>
-
     )
 }
