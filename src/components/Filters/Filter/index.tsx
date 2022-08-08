@@ -24,8 +24,7 @@ export default function Filter(props: FilterProps) {
     }, [filter])
 
     function handlePress() {
-        if(filter == props.type) setFilter('')
-        else setFilter(props.type);
+        setFilter( isActive ? '' : props.type);
     }
 
     return (

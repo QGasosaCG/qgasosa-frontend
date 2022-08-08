@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 import GasStation from "../models/GasStation";
-import { listGasStations, listGasStationsByDistance, listGasStationsByPrice } from "../services/gasStation";
+import { listGasStations, listGasStationsByDistance } from "../services/gasStation";
 import LocationContext from "./LocationContext";
 import AppContext from "./AppContext";
 
@@ -57,7 +57,7 @@ export function GasStationProvider(props: { children: any}) {
             });
 
             setGasStations(converted);
-            setGasStationsToShow([]);
+            setGasStationsToShow(converted);
 
         } catch(e) {
             // alertError('Ocorreu um erro');
@@ -83,7 +83,7 @@ export function GasStationProvider(props: { children: any}) {
                 return -1;
             })
 
-            setGasStations(temp);
+            return temp;
 
         } catch(e) {
             // alertError('Ocorreu um erro');
@@ -92,42 +92,46 @@ export function GasStationProvider(props: { children: any}) {
     }
 
     async function getByPrice() {
+        
+        let temp:GasStation[] = []
 
-        try {
+        gasStations.forEach(gasStation => {
+
+            let haveTheFuel = false;
             
-            let temp = [...gasStations];
+            for (let fuel of gasStation.fuels) {
+                if(fuel.name == 'GASOLINA COMUM') {
+                    haveTheFuel = true
+                    break;
+                }
+            }
+
+            if(haveTheFuel) temp.push(gasStation)
+        })
+
+        let final = temp.sort((a, b) => {
             
-            temp.sort((a, b) => {
-
-                let A_priceGasoline = 0;
-                let B_priceGasoline = 0;
-                
-                for (let fuel of a.fuels) {
-                    if(fuel.name == 'GASOLINA COMUM') {
-                        A_priceGasoline = fuel.price;
-                        break;    
-                    }
-                }
-
-                for (let fuel of b.fuels) {
-                    if(fuel.name == 'GASOLINA COMUM') {
-                        B_priceGasoline = fuel.price;
-                        break;    
-                    }
-                }
-
-                if(A_priceGasoline == 0 || B_priceGasoline == 0) return -5;
-
-                if(A_priceGasoline > B_priceGasoline) return 1
-                return -1;
+            let price_A = 0;
+            let price_B = 0;
+            
+            a.fuels.forEach(fuel => {
+                if(fuel.name == 'GASOLINA COMUM') price_A == fuel.price
             })
 
-            setGasStations(temp);
+            b.fuels.forEach(fuel => {
+                if(fuel.name == 'GASOLINA COMUM') price_B == fuel.price
+            })
 
-        } catch(e) {
-            // alertError('Ocorreu um erro');
-        } 
 
+            if(price_A > price_B) return -1
+            else return 1
+        })
+
+        return final;
+    }
+
+    function getFavorites() {
+        return gasStations.filter(gasStation => isFavorite(gasStation));
     }
 
     function cleanGasStationsToShow() {
@@ -184,17 +188,16 @@ export function GasStationProvider(props: { children: any}) {
 
             await getGasStations();
 
-            if(filter == 'distance') await getByDistance();
-            else if (filter == 'price') await getByPrice();
+            let temp : GasStation[]  = [];
+
+            if(filter == 'distance') temp = await getByDistance() || [];
+            else if (filter == 'price') temp = await getByPrice() || [];
+            else if (filter == 'favorite') temp = getFavorites() || [];
     
-            let temp = gasStations.filter((gasStation) => { 
-                let okInSearch = gasStation.name.toLowerCase().includes(search.toLowerCase()) || gasStation.address.street.toLowerCase().includes(search.toLowerCase());
-                
-                if(filter == 'favorite') return okInSearch && isFavorite(gasStation);
-                else return okInSearch;
-            })
+            let final = temp.filter(gasStation => gasStation.name.toLowerCase().includes(search.toLowerCase()) || gasStation.address.street.toLowerCase().includes(search.toLowerCase())) || [];
     
-            setGasStationsToShow(temp);
+            setGasStationsToShow(final);
+
             setIsSearching(false);
         }
 
@@ -206,9 +209,12 @@ export function GasStationProvider(props: { children: any}) {
     }, [storage])
 
     useEffect(() => {
-        getGasStations();
-        setSearch('');
-        setFilter('');
+        ( async () => {
+            cleanGasStationsToShow();
+            await getGasStations();
+            setSearch('');
+            setFilter('');
+        })()
     }, [])
 
     return (
@@ -231,7 +237,7 @@ export function GasStationProvider(props: { children: any}) {
 
             favorite,
             unfavorite,
-            isFavorite
+            isFavorite,
         }}>
             {props.children}
         </GasStationContext.Provider>

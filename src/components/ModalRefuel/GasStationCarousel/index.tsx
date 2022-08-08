@@ -1,11 +1,11 @@
 import { useContext, useRef, useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
-import Icons from "../../assets/icons";
-import GasStationContext from "../../contexts/GasStationContext";
-import GasStation from "../../models/GasStation";
-import { priceView } from '../../utils/functions';
-import { COLORS } from "../../utils/theme";
+import Icons from "../../../assets/icons";
+import GasStationContext from "../../../contexts/GasStationContext";
+import GasStation from "../../../models/GasStation";
+import { priceView } from '../../../utils/functions';
+import { COLORS } from "../../../utils/theme";
 
 import styles from './styles'
 

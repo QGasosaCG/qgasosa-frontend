@@ -25,12 +25,10 @@ export default function Search(props: SearchProps) {
     }
 
     function onBlur() {
-        setTimeout(() => {
-            setFocus(false)
-            cleanGasStationsToShow()
-            setSearch('')
-            setFilter('')
-        }, 1000);
+        setFocus(false)
+        cleanGasStationsToShow()
+        setSearch('')
+        setFilter('distance')
     }
 
     function pressGasStation(pressed: GasStation) {
@@ -49,21 +47,22 @@ export default function Search(props: SearchProps) {
 
             { focus ?
 
-                isSearching ? 
-                    <View style={styles.loading}>
-                        <ActivityIndicator color={COLORS.red}/>
-                    </View>
-                :
-                    <>
-                        <Filters />
-
+                <>
+                    <Filters/>
+                
+                    { isSearching ? 
+                            <View style={styles.loading}>
+                                <ActivityIndicator color={COLORS.red}/>
+                            </View>
+                        :
+        
                         <FlatList 
                             data={gasStationsToShow} 
                             renderItem={(object) => <GasStationSearch gasStation={object.item} onPress={() => pressGasStation(object.item)} key={'search-' + object.index} />}
                             ListEmptyComponent={<Text style={styles.empty}>Nenhum posto encontrado...</Text>}
                         />
-                    </>
-
+                    }
+                </>
             : null }
 
         </View>

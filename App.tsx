@@ -16,6 +16,7 @@ import Success from './src/components/Success';
 import ModalRefuel from './src/components/ModalRefuel';
 import { InvoiceProvider } from './src/contexts/InvoiceContext';
 import Camera from './src/components/Camera';
+import { FuelProvider } from './src/contexts/FuelContext';
 
 export default function App() {
 
@@ -43,10 +44,11 @@ export default function App() {
     <SafeAreaProvider>
       <AppProvider>
         <LocationProvider>
-          <GasStationProvider>
-            <ConsumptionProvider>
-              <RefuelProvider>
-                <InvoiceProvider>
+          <FuelProvider>
+            <GasStationProvider>
+              <ConsumptionProvider>
+                <RefuelProvider>
+                  <InvoiceProvider>
 
     { fontsLoaded ? <>
       
@@ -61,10 +63,11 @@ export default function App() {
 
     <StatusBar animated translucent/>
 
-                </InvoiceProvider>
-              </RefuelProvider>
-            </ConsumptionProvider>
-          </GasStationProvider>
+                  </InvoiceProvider>
+                </RefuelProvider>
+              </ConsumptionProvider>
+            </GasStationProvider>
+          </FuelProvider>
         </LocationProvider>
       </AppProvider>
     </SafeAreaProvider>

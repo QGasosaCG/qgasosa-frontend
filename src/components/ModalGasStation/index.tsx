@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Linking, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import Icons from "../../assets/icons";
 
 import GasStationContext from "../../contexts/GasStationContext"
@@ -55,7 +55,7 @@ export default function ModalGasStation() {
 
                     </View>
 
-                    <TouchableOpacity activeOpacity={0.8}>
+                    <TouchableOpacity activeOpacity={0.8} onPress={() => Linking.openURL(`google.navigation:q=${openGasStation.address.latitude}+${openGasStation.address.longitude}`)}>
                         <View style={{...styles.button, ...styles.buttonGoToHim}}>
                             <Text style={styles.buttonGoToHim.text}>Ir até este posto!</Text>
                         </View>
